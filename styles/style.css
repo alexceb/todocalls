@@ -1,0 +1,11 @@
+.sortorder:after {
+	content: '\25b2';
+}
+
+.sortorder.reverse:after {
+    content: '\25bc';
+}
+
+.control-panel div > button {
+	margin: 0 1em 1em 1em;
+}

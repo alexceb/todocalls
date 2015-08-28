@@ -1,0 +1,83 @@
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="styles/style.css">
+</head>
+<body ng-app="todocallsApp">
+<div class="container next-call" ng-controller="listController as ctrl">
+	<div class="container well">
+		<h2>Next call</h2>
+		<table class="table">
+			<tr>
+				<td>{{ ctrl.nextCall.name }}</td>
+				<td>{{ ctrl.nextCall.phone }}</td>
+				<td>{{ ctrl.nextCall.time }}</td>
+			</tr>
+		</table>
+	</div>
+</div>
+<hr>
+<div class="container" ng-controller="listController as listCtrl">
+	<div class="container well">
+		<h2>Add call</h2>
+		<form class="form-inline" id="add-call" ng-submit="listCtrl.addItem()">
+			<div class="form-group">
+		     	<label for="inputName">Name</label>
+		     	<input type="text" required class="form-control" id="inputName" placeholder="John Black" ng-model="listCtrl.callName">
+		  	</div>
+		  	<div class="form-group">
+		    	<label for="inputPhone">Phone</label>
+		    	<input type="tel" required class="form-control" id="inputPhone" placeholder="00 930 075610" ng-model="listCtrl.callPhone">
+		  	</div>
+		  	<div class="form-group">
+		    	<label for="inputTime">Time</label>
+		    	<input type="time" required class="form-control" id="inputTime" placeholder="hh:mm" ng-model="listCtrl.callTime">
+		  	</div>
+		  <button type="submit" class="btn btn-primary">Add</button>
+		</form>
+	</div>
+
+	<div class="container well">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>
+						<a href="" ng-click="listCtrl.order('name')">Name</a>
+						<span class="sortorder" ng-show="listCtrl.predicate === 'name'" ng-class="{reverse:listCtrl.reverse}"></span>
+					</th>
+					<th>Phone Number</th>
+					<th>
+						<a href="" ng-click="listCtrl.order('time')">Time</a>
+						<span class="sortorder" ng-show="listCtrl.predicate === 'time'" ng-class="{reverse:listCtrl.reverse}"></span>
+					</th>
+					<th>Remove</th>
+					<th>Check</th>	
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="call in listCtrl.calls | orderBy:listCtrl.predicate:listCtrl.reverse track by call.id" id="{{ call.id }}">
+					<td>{{ call.name }}</td>
+					<td>{{ call.phone }}</td>
+					<td>{{ call.time }}</td>
+					<td ng-click="listCtrl.removeCall(call)">x</td>
+					<td><input type="checkbox" disabled ng-checked="listCtrl.checkCallTime(call)"/></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="container control-panel">
+		<div class="row text-center">
+			<button id="allCalls" class="btn btn-default" ng-click="listCtrl.setDisplayOption('all_calls')">All</button>
+			<button id="nextCalls" class="btn btn-primary" ng-click="listCtrl.setDisplayOption('next_calls')">Next</button>
+			<button id="finishedCalls" class="btn btn-default" ng-click="listCtrl.setDisplayOption('finished_calls')">Finished</button>
+		</div>
+	</div>
+</div>
+<script src="bower_components/angular/angular.min.js"></script>
+<script type="text/javascript" src="script/app.js"></script>
+<script type="text/javascript" src="script/app.factory.js"></script>
+<script type="text/javascript" src="script/controllers/call_list.js"></script>
+<!-- <script type="text/javascript" src="js/app.directive.js"></script> -->
+</body>
+</html>
